@@ -1,3 +1,10 @@
+-- This is the second script
+USE ividyaraassign2db;
+
+-- Uploading patient information
+SELECT* FROM patient;
+LOAD DATA LOCAL INFILE "./patientdata.txt" INTO TABLE ividyaraassign2db.patient
+FIELDS TERMINATED BY ',';
 SELECT* FROM patient;
 
 --Adding myself as a patient 
