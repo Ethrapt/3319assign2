@@ -1,0 +1,29 @@
+USE ividyaraassign2db;
+-- Query 1
+SELECT lastName FROM patient;
+-- Query 2
+SELECT DISTINCT lastName FROM patient;
+-- Query 3
+SELECT* FROM doctor ORDER BY lastName;
+-- Query 4
+SELECT hospName, hospCode FROM hospital WHERE numberBeds>1500;
+-- Query 5
+SELECT lastName, firstName FROM doctor WHERE hospID = (SELECT hospCode FROM hospital WHERE hospName = "St.Joseph");
+-- Query 6
+SELECT firstName, lastName FROM patient WHERE lastName LIKE "G%";
+-- Query 7
+SELECT firstName, lastName FROM patient WHERE OHIPNumber=(SELECT firstName, lastName FROM patient WHERE OHIPNumber IN (SELECT patientID FROM treats WHERE doctorID = (SELECT licenseNum FROM doctor WHERE lastName = "Clooney"));
+); 
+-- Query 8
+SELECT hospName, city, lastName FROM hospital, doctor WHERE hospital.headDoctorID=doctor.licenseNum;
+-- Query 9
+SELECT SUM(numberBeds) AS "Total Number of Beds from Hospital" FROM hospital;  
+-- Query 10
+SELECT patient.firstName AS "Patient", doctor.firstName AS "Doctor" FROM patient,doctor,treats,hospital WHERE  doctor.licenseNum = hospital.headDoctorID AND doctor.licenseNum=treats.doctorID AND treats.doctorID = hospital.headDoctorID AND patient.OHIPNumber = treats.patientID;
+-- Query 11
+SELECT firstName, lastName FROM doctor WHERE doctor.hospID IN (SELECT hospCode FROM hospital WHERE hospName = "Victoria") AND specialty = "Surgeon";
+-- Query 12
+SELECT firstName FROM doctor WHERE licenseNum NOT IN (SELECT doctorID FROM treats);
+-- Query 13
+SELECT lastName, firstName, COUNT(treats.patientID) FROM doctor, treats WHERE doctor.licenseNum = treats.doctorID GROUP BY lastName,firstName HAVING COUNT(patientID)>1;
+
