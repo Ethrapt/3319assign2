@@ -12,8 +12,7 @@ SELECT lastName, firstName FROM doctor WHERE hospID = (SELECT hospCode FROM hosp
 -- Query 6
 SELECT firstName, lastName FROM patient WHERE lastName LIKE "G%";
 -- Query 7
-SELECT firstName, lastName FROM patient WHERE OHIPNumber=(SELECT firstName, lastName FROM patient WHERE OHIPNumber IN (SELECT patientID FROM treats WHERE doctorID = (SELECT licenseNum FROM doctor WHERE lastName = "Clooney"));
-); 
+SELECT firstName, lastName FROM patient WHERE OHIPNumber=(SELECT firstName, lastName FROM patient WHERE OHIPNumber IN (SELECT patientID FROM treats WHERE doctorID = (SELECT licenseNum FROM doctor WHERE lastName = "Clooney"))); 
 -- Query 8
 SELECT hospName, city, lastName FROM hospital, doctor WHERE hospital.headDoctorID=doctor.licenseNum;
 -- Query 9
