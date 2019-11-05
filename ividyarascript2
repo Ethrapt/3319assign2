@@ -7,7 +7,7 @@ LOAD DATA LOCAL INFILE "./patientdata.txt" INTO TABLE ividyaraassign2db.patient
 FIELDS TERMINATED BY ',';
 SELECT* FROM patient;
 
---Adding myself as a patient 
+-- Adding myself as patient 
 INSERT INTO patient(OHIPNumber, firstName, lastName) VALUES ("250999063", "Isuri", "Vidyarathne");
 SELECT* FROM patient;
 
@@ -24,7 +24,7 @@ SELECT* FROM doctor;
 
 -- Adding hospital information and values
 SELECT* FROM hospital;
-INSERT INTO hospital(hospCode, hospName, city, province, numberBeds, headDoctorID, headDoctorStartDate) VALUES ("BBC", "St.Joseph", "London","On","1000","GD56","11999-09-10");
+INSERT INTO hospital(hospCode, hospName, city, province, numberBeds, headDoctorID, headDoctorStartDate) VALUES ("BBC", "St.Joseph", "London","On","1000","GD56","1999-09-10");
 INSERT INTO hospital(hospCode, hospName, city, province, numberBeds, headDoctorID, headDoctorStartDate) VALUES ("ABC", "Victoria", "London","On","1600","SE66","1994-12-05");
 INSERT INTO hospital(hospCode, hospName, city, province, numberBeds, headDoctorID, headDoctorStartDate) VALUES ("DDE", "Victoria", "Victoria","BC","1200","YT67","1997-12-07");
 SELECT* FROM hospital;
@@ -45,7 +45,7 @@ INSERT INTO treats(patientID, doctorID) VALUES ("111222111","YT67");
 INSERT INTO treats(patientID, doctorID) VALUES ("250999063","SE66");
 SELECT* FROM treats;
 
---Updating the hospitals the doctors work at 
+-- Updating the hospitals the doctors work at 
 SELECT* FROM doctor;
 UPDATE doctor SET hospID="BBC" WHERE licenseNum = "RD34";
 UPDATE doctor SET hospID="BBC" WHERE licenseNum = "GD56";
@@ -61,7 +61,7 @@ SELECT* FROM patient;
 UPDATE patient SET lastname="Brown" WHERE OHIPNumber= "111222111";
 SELECT* FROM patient;
 
---Updating spock's patients to Dr. Clooney instead
+-- Updating spock's patients to Dr. Clooney instead
 SELECT* FROM treats;
 UPDATE treats SET doctorID=(SELECT licenseNum FROM doctor WHERE lastName="Clooney") WHERE doctorID = (SELECT licenseNum FROM doctor WHERE lastName="Spock");
 SELECT* FROM treats;

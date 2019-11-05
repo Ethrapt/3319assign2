@@ -1,0 +1,126 @@
+Warning: Using a password on the command line interface can be insecure.
+ERROR 1451 (23000) at line 3: Cannot delete or update a parent row: a foreign key constraint fails (`ividyaraassign2db`.`hospital`, CONSTRAINT `hospital_ibfk_1` FOREIGN KEY (`headDoctorID`) REFERENCES `doctor` (`licenseNum`))
+--------------
+DELETE FROM doctor WHERE licensedate < "1965-01-01"
+--------------
+
+--------------
+CREATE VIEW patientview AS SELECT patient.firstName AS "Patient First Name", patient.lastName AS "Patient Last Name" ,doctor.lastName AS "Doctor", hospital.hospName AS "Hospital Name" FROM patient,doctor,treats,hospital WHERE doctor.licenseNum = hospital.headDoctorID AND doctor.licenseNum=treats.doctorID AND treats.doctorID = hospital.headDoctorID AND patient.OHIPNumber = treats.patientID AND hospital.headDoctorStartDate > "1995-12-31"
+--------------
+
+Query OK, 0 rows affected (0.01 sec)
+
+--------------
+SELECT* from patientview
+--------------
+
++--------------------+-------------------+---------+---------------+
+| Patient First Name | Patient Last Name | Doctor  | Hospital Name |
++--------------------+-------------------+---------+---------------+
+| Bill               | Gellar            | Shabado | St.Joseph     |
+| Colleen            | Gellar            | Shabado | St.Joseph     |
+| Scotty             | Bing              | Shabado | St.Joseph     |
++--------------------+-------------------+---------+---------------+
+3 rows in set (0.00 sec)
+
+--------------
+SELECT* from doctor
+--------------
+
++------------+-----------+------------+--------------+-------------+--------+
+| licenseNum | firstName | lastName   | specialty    | licenseDate | hospID |
++------------+-----------+------------+--------------+-------------+--------+
+| GD56       | Joey      | Shabado    | Podiatrist   | 1960-06-24  | BBC    |
+| HT45       | Ross      | Clooney    | Surgeon      | 1987-06-20  | DDE    |
+| JF05       | Famous    | Doctor     | Physician    | 1930-03-07  | ABC    |
+| JK78       | Mandy     | Webster    | Surgeon      | 1990-08-08  | BBC    |
+| RD34       | Bernie    | Kavorikian | Urologist    | 1980-09-09  | BBC    |
+| SE66       | Colleen   | Aziz       | Surgeon      | 1989-08-24  | ABC    |
+| YT67       | Ben       | Spock      | Pediatrician | 1955-02-20  | DDE    |
++------------+-----------+------------+--------------+-------------+--------+
+7 rows in set (0.00 sec)
+
+--------------
+SELECT* from treats
+--------------
+
++-----------+----------+
+| patientID | doctorID |
++-----------+----------+
+| 110112113 | GD56     |
+| 444555666 | HT45     |
+| 444555666 | JK78     |
+| 111222333 | SE66     |
+| 111222333 | HT45     |
+| 111222333 | JK78     |
+| 333444555 | GD56     |
+| 667766777 | HT45     |
+| 667766777 | JK78     |
+| 667766777 | GD56     |
+| 111222111 | HT45     |
+| 250999063 | SE66     |
++-----------+----------+
+12 rows in set (0.00 sec)
+
+--------------
+DELETE FROM doctor WHERE lastName = "Clooney"
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+SELECT* FROM doctor
+--------------
+
++------------+-----------+------------+--------------+-------------+--------+
+| licenseNum | firstName | lastName   | specialty    | licenseDate | hospID |
++------------+-----------+------------+--------------+-------------+--------+
+| GD56       | Joey      | Shabado    | Podiatrist   | 1960-06-24  | BBC    |
+| JF05       | Famous    | Doctor     | Physician    | 1930-03-07  | ABC    |
+| JK78       | Mandy     | Webster    | Surgeon      | 1990-08-08  | BBC    |
+| RD34       | Bernie    | Kavorikian | Urologist    | 1980-09-09  | BBC    |
+| SE66       | Colleen   | Aziz       | Surgeon      | 1989-08-24  | ABC    |
+| YT67       | Ben       | Spock      | Pediatrician | 1955-02-20  | DDE    |
++------------+-----------+------------+--------------+-------------+--------+
+6 rows in set (0.00 sec)
+
+--------------
+SELECT* FROM treats
+--------------
+
++-----------+----------+
+| patientID | doctorID |
++-----------+----------+
+| 110112113 | GD56     |
+| 444555666 | JK78     |
+| 111222333 | SE66     |
+| 111222333 | JK78     |
+| 333444555 | GD56     |
+| 667766777 | JK78     |
+| 667766777 | GD56     |
+| 250999063 | SE66     |
++-----------+----------+
+8 rows in set (0.00 sec)
+
+--------------
+SELECT* FROM doctor
+--------------
+
++------------+-----------+------------+--------------+-------------+--------+
+| licenseNum | firstName | lastName   | specialty    | licenseDate | hospID |
++------------+-----------+------------+--------------+-------------+--------+
+| GD56       | Joey      | Shabado    | Podiatrist   | 1960-06-24  | BBC    |
+| JF05       | Famous    | Doctor     | Physician    | 1930-03-07  | ABC    |
+| JK78       | Mandy     | Webster    | Surgeon      | 1990-08-08  | BBC    |
+| RD34       | Bernie    | Kavorikian | Urologist    | 1980-09-09  | BBC    |
+| SE66       | Colleen   | Aziz       | Surgeon      | 1989-08-24  | ABC    |
+| YT67       | Ben       | Spock      | Pediatrician | 1955-02-20  | DDE    |
++------------+-----------+------------+--------------+-------------+--------+
+6 rows in set (0.00 sec)
+
+ERROR 1451 (23000) at line 13: Cannot delete or update a parent row: a foreign key constraint fails (`ividyaraassign2db`.`hospital`, CONSTRAINT `hospital_ibfk_1` FOREIGN KEY (`headDoctorID`) REFERENCES `doctor` (`licenseNum`))
+--------------
+DELETE FROM doctor WHERE specialty = "Surgeon"
+--------------
+
+Bye

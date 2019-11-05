@@ -1,0 +1,160 @@
+Warning: Using a password on the command line interface can be insecure.
+--------------
+SHOW DATABASES
+--------------
+
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| ividyaraassign2db  |
+| mysql              |
+| performance_schema |
+| vetoffice          |
++--------------------+
+5 rows in set (0.00 sec)
+
+--------------
+DROP DATABASE IF EXISTS ividyaraassign2db
+--------------
+
+Query OK, 4 rows affected (0.15 sec)
+
+--------------
+SHOW DATABASES
+--------------
+
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| vetoffice          |
++--------------------+
+4 rows in set (0.00 sec)
+
+--------------
+CREATE DATABASE ividyaraassign2db
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+
+--------------
+GRANT USAGE ON *.* TO 'ta'@'localhost'
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+DROP USER 'ta'@'localhost'
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+CREATE USER 'ta'@'localhost' IDENTIFIED BY 'cs3319'
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+GRANT ALL PRIVILEGES ON ividyaraassign2db.* TO 'ta'@'localhost'
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+FLUSH PRIVILEGES
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+SHOW TABLES
+--------------
+
+Empty set (0.00 sec)
+
+--------------
+CREATE TABLE hospital (hospCode CHAR(3),hospName VARCHAR(20), city VARCHAR(20), province VARCHAR(2), numberBeds int, headDoctorID CHAR(4), headDoctorStartDate DATE, PRIMARY KEY(hospCode))
+--------------
+
+Query OK, 0 rows affected (0.06 sec)
+
+--------------
+SHOW TABLES
+--------------
+
++-----------------------------+
+| Tables_in_ividyaraassign2db |
++-----------------------------+
+| hospital                    |
++-----------------------------+
+1 row in set (0.00 sec)
+
+--------------
+CREATE TABLE doctor (licenseNum CHAR(4),firstName VARCHAR(20), lastName VARCHAR(20), specialty VARCHAR(20), licenseDate DATE, hospID CHAR(3), PRIMARY KEY(licenseNum), FOREIGN KEY(hospID) REFERENCES hospital(hospCode))
+--------------
+
+Query OK, 0 rows affected (0.06 sec)
+
+--------------
+SHOW TABLES
+--------------
+
++-----------------------------+
+| Tables_in_ividyaraassign2db |
++-----------------------------+
+| doctor                      |
+| hospital                    |
++-----------------------------+
+2 rows in set (0.00 sec)
+
+--------------
+ALTER TABLE hospital ADD FOREIGN KEY (headDoctorID) REFERENCES doctor(licenseNum)
+--------------
+
+Query OK, 0 rows affected (0.14 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+--------------
+CREATE TABLE patient (OHIPNumber CHAR(9), firstName VARCHAR(20), lastName VARCHAR(20), PRIMARY KEY (OHIPNumber))
+--------------
+
+Query OK, 0 rows affected (0.05 sec)
+
+--------------
+SHOW TABLES
+--------------
+
++-----------------------------+
+| Tables_in_ividyaraassign2db |
++-----------------------------+
+| doctor                      |
+| hospital                    |
+| patient                     |
++-----------------------------+
+3 rows in set (0.00 sec)
+
+--------------
+CREATE TABLE treats(patientID CHAR(9), doctorID CHAR(4), FOREIGN KEY (doctorID) REFERENCES doctor(licenseNum) ON DELETE CASCADE, FOREIGN KEY (patientID) REFERENCES patient(OHIPNumber))
+--------------
+
+Query OK, 0 rows affected (0.06 sec)
+
+--------------
+SHOW TABLES
+--------------
+
++-----------------------------+
+| Tables_in_ividyaraassign2db |
++-----------------------------+
+| doctor                      |
+| hospital                    |
+| patient                     |
+| treats                      |
++-----------------------------+
+4 rows in set (0.00 sec)
+
+Bye
