@@ -1,0 +1,40 @@
+-- This is the first scirpt
+-- Here I am building the database if it exists
+
+SHOW DATABASES; 
+DROP DATABASE IF EXISTS ividyaraassign2db;
+SHOW DATABASES;
+CREATE DATABASE ividyaraassign2db;
+USE ividyaraassign2db;
+
+-- This gives TA access to files
+GRANT USAGE ON *.* TO 'ta'@'localhost';
+DROP USER 'ta'@'localhost';
+CREATE USER 'ta'@'localhost' IDENTIFIED BY 'cs3319';
+GRANT ALL PRIVILEGES ON ividyaraassign2db.* TO 'ta'@'localhost';
+FLUSH PRIVILEGES;
+
+
+-- Creating the hospital table
+SHOW TABLES;
+CREATE TABLE hospital (hospCode CHAR(3),hospName VARCHAR(20), city VARCHAR(20), province VARCHAR(2), numberBeds int, headDoctorID CHAR(4), headDoctorStartDate DATE, PRIMARY KEY(hospCode));
+
+
+-- Creating the doctor table
+SHOW TABLES;
+CREATE TABLE doctor (licenseNum CHAR(4),firstName VARCHAR(20), lastName VARCHAR(20), specialty VARCHAR(20), licenseDate DATE, hospID CHAR(3), PRIMARY KEY(licenseNum), FOREIGN KEY(hospID) REFERENCES hospital(hospCode));
+
+
+-- Adding foreign key to the hospital table (doctor)
+SHOW TABLES;
+ALTER TABLE hospital ADD FOREIGN KEY (headDoctorID) REFERENCES doctor(licenseNum);
+
+
+-- Creating the patient table
+CREATE TABLE patient (OHIPNumber CHAR(9), firstName VARCHAR(20), lastName VARCHAR(20), PRIMARY KEY (OHIPNumber));
+SHOW TABLES;
+
+
+-- Creating the treats table
+CREATE TABLE treats(patientID CHAR(9), doctorID CHAR(4), FOREIGN KEY (doctorID) REFERENCES doctor(licenseNum) ON DELETE CASCADE, FOREIGN KEY (patientID) REFERENCES patient(OHIPNumber));
+SHOW TABLES;
