@@ -1,0 +1,13 @@
+-- This is script 4
+USE ividyaraassign2db;
+DELETE FROM doctor WHERE licensedate < "1965-01-01" ; -- This cannot be deleted because doctor is a foreign key, there are constraints
+CREATE VIEW patientview AS SELECT patient.firstName AS "Patient First Name", patient.lastName AS "Patient Last Name" ,doctor.lastName AS "Doctor", hospital.hospName AS "Hospital Name" FROM patient,doctor,treats,hospital WHERE doctor.licenseNum = hospital.headDoctorID AND doctor.licenseNum=treats.doctorID AND treats.doctorID = hospital.headDoctorID AND patient.OHIPNumber = treats.patientID AND hospital.headDoctorStartDate > "1995-12-31";
+SELECT* from patientview;
+SELECT* from doctor;
+SELECT* from treats;
+DELETE FROM doctor WHERE lastName = "Clooney";
+SELECT* FROM doctor;
+SELECT* FROM treats;
+SELECT* FROM doctor;
+-- This cannot be deleted because doctor is a foreign key on tables and thus you cannot use cascade delete
+DELETE FROM doctor WHERE specialty = "Surgeon";
