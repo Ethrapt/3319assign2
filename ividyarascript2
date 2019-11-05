@@ -8,7 +8,7 @@ FIELDS TERMINATED BY ',';
 SELECT* FROM patient;
 
 --Adding myself as a patient 
-INSERT INTO patient (OHIPNumber, firstName, lastName) VALUES ("250999063", "Isuri", "Vidyarathne");
+INSERT INTO patient(OHIPNumber, firstName, lastName) VALUES ("250999063", "Isuri", "Vidyarathne");
 SELECT* FROM patient;
 
 -- Adding all the doctors and their information
